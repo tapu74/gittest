@@ -29,8 +29,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link   href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link   href="bootstrap-2.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap-2.3.2/js/bootstrap.min.js"></script>
 </head>
  
 <body>

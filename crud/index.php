@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<LINK HREF="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<LINK HREF="bootstrap-2.3.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap-2.3.2/css/table-style.css" rel="stylesheet">
+<script src="bootstrap-2.3.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -13,7 +14,8 @@
 		</div>
 		<div class="row">
 		<p>
-		<a href="create.php" class="btn btn-success"">Create</a>
+		<a href="create.php" class="btn btn-success">Create</a>
+		<a href="file_upload.php" class="btn btn-success">File upload</a>
 		</p>
 			<table class="table table-striped table-bordered">
 				<thread>
@@ -26,12 +28,21 @@
 				</thread>
 				<tbody>
 				<?php
+				require('pagination.php');
+				$page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
+				if ($page <= 0) $page = 1;
+				$per_page = 5; // Set how many records do you want to display per page.
+				$startpoint = ($page * $per_page) - $per_page;
+				$statement = "SELECT COUNT(*) as `num` from `customers` ORDER BY `id` DESC"; // Change table name according to your database table.
+				$sql = "SELECT * FROM `customers` ORDER BY `id` DESC  LIMIT {$startpoint} , {$per_page}";
+				
+				
 				require 'database.php';
 				//$MysqlDb=new Database();
 				//$MysqlConn=$MysqlDb->connect();
 				$MysqlConn = Database::connect ();
 				// echo $MysqlConn;
-				$sql = "select * from customers order by id desc";
+				//$sql = "select * from customers order by id desc";
 				$result = $MysqlConn->query ( $sql );
 				// foreach($result->fetch_array() as $row)
 				while ( $row = $result->fetch_array () ) {
@@ -53,6 +64,9 @@
 				</tbody>
 
 			</table>
+			<?php
+			echo pagination($statement,$per_page,$page);
+			?>
 		</div>
 
 	</div>
